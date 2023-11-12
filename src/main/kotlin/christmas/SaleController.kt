@@ -7,7 +7,13 @@ import christmas.domain.SumSaleCalculator
 
 class SaleController(private val inputDay: Int, private val menuList: List<Order>) {
 
-//입력한 요일을 판단하는 함수 , 검증 된 날짜와 검증된 Order(name,count)형식의 메뉴리스트를 받는다.
+    //입력한 요일을 판단하는 함수 , 검증 된 날짜와 검증된 Order(name,count)형식의 메뉴리스트를 받는다.
+    fun sumSaleMoney() {
+        val menuDiscountDay = checkDayForMenuDiscount()
+        val sumDiscountDay = checkDayForSumDiscount()
+        MenuSaleCalculator(menuDiscountDay).calculateDiscountRate(menuList)
+        SumSaleCalculator(sumDiscountDay).calculateDiscountSpecialDay()
+    }
 
     private fun checkDayForSumDiscount(): ChristmasDiscountDayInfo {
         return when {
@@ -25,12 +31,6 @@ class SaleController(private val inputDay: Int, private val menuList: List<Order
         }
     }
 
-    fun sumSaleMoney() {
-        val menuDiscountDay = checkDayForMenuDiscount()
-        val sumDiscountDay = checkDayForSumDiscount()
-        MenuSaleCalculator(menuDiscountDay).calculateDiscountRate(menuList)
-        SumSaleCalculator(sumDiscountDay).calculateDiscountSpecialDay()
-    }
 
     companion object {
         const val STAR_DAY = "STAR_DAY"
