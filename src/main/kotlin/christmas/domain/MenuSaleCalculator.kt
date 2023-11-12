@@ -1,5 +1,6 @@
 package christmas.domain
 
+import christmas.data.Order
 import christmas.util.Appetizer
 import christmas.util.MainMenu
 

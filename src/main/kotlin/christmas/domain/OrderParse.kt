@@ -1,5 +1,7 @@
 package christmas.domain
 
+import christmas.data.Order
+
 class OrderParse() {
     fun parseOrder(input: String): List<Order> {
         val orderList = mutableListOf<Order>()
