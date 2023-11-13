@@ -4,6 +4,7 @@ import christmas.data.Order
 import christmas.domain.OrderParse
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class OrderParseTest {
     @Test
@@ -18,7 +19,11 @@ class OrderParseTest {
 
     @Test
     fun `입력한 값중에 공백이 들어 있을 때 예외를 던짐`() {
+        val selectMenus = "-1,제로콜라-"
 
+        assertThrows<IllegalArgumentException> {
+            OrderParse().parseOrder(selectMenus)
+        }
     }
 
     @Test
