@@ -1,4 +1,4 @@
-package christmas
+package christmas.domain
 
 import christmas.data.Order
 import christmas.util.Appetizer
@@ -19,7 +19,7 @@ class CalculatorTotalPrice(private val selectedMenus: List<Order>) {
     private fun sumAppetizerMenuPrice(): Int {
         var total = 0
         for (order in selectedMenus) {
-            val menu = Appetizer.values().find { it.appetizerName == order.menuName }
+            val menu = Appetizer.entries.find { it.appetizerName == order.menuName }
 
             if (menu != null) {
                 // 주문한 메뉴가 에피타이저Menu에 있는 경우
@@ -32,7 +32,7 @@ class CalculatorTotalPrice(private val selectedMenus: List<Order>) {
     private fun sumMainMenuPrice(): Int {
         var total = 0
         for (order in selectedMenus) {
-            val menu = MainMenu.values().find { it.mainMenuName == order.menuName }
+            val menu = MainMenu.entries.find { it.mainMenuName == order.menuName }
 
             if (menu != null) {
                 // 주문한 메뉴가 MainMenu에 있는 경우
@@ -45,7 +45,7 @@ class CalculatorTotalPrice(private val selectedMenus: List<Order>) {
     private fun sumDesertMenuPrice(): Int {
         var total = 0
         for (order in selectedMenus) {
-            val menu = Dessert.values().find { it.dessertName == order.menuName }
+            val menu = Dessert.entries.find { it.dessertName == order.menuName }
 
             if (menu != null) {
                 // 주문한 메뉴가 디저트Menu에 있는 경우
@@ -58,7 +58,7 @@ class CalculatorTotalPrice(private val selectedMenus: List<Order>) {
     private fun sumBeverageMenuPrice(): Int {
         var total = 0
         for (order in selectedMenus) {
-            val menu = Beverage.values().find { it.drinkName == order.menuName }
+            val menu = Beverage.entries.find { it.drinkName == order.menuName }
 
             if (menu != null) {
                 // 주문한 메뉴가 음료Menu에 있는 경우

@@ -21,10 +21,10 @@ class MenuValidator(private val selectedMenu: String) {
 
     private fun checkMenu(menuNameToCheck: String): Boolean {
         //해당하는 메뉴가 없을 경우 ERROR_MENU_INPUT 던짐
-        val isMainValid = MainMenu.values().any { it.mainMenuName == menuNameToCheck }
-        val isDessertValid = Dessert.values().any { it.dessertName == menuNameToCheck }
-        val isAppetizerValid = Appetizer.values().any { it.appetizerName == menuNameToCheck }
-        val isDrinkValid = Beverage.values().any { it.drinkName == menuNameToCheck }
+        val isMainValid = MainMenu.entries.any { it.mainMenuName == menuNameToCheck }
+        val isDessertValid = Dessert.entries.any { it.dessertName == menuNameToCheck }
+        val isAppetizerValid = Appetizer.entries.any { it.appetizerName == menuNameToCheck }
+        val isDrinkValid = Beverage.entries.any { it.drinkName == menuNameToCheck }
 
         // 하나라도 일치하는 메뉴가 있다면 true, 그렇지 않으면 false 반환
         return isMainValid || isDessertValid || isAppetizerValid || isDrinkValid

@@ -23,11 +23,9 @@ class MenuSaleCalculator(private val day: String) {
         var totalOrders = 0
 
         for (order in isMainMenu(selectedMenus)) {
-            println("메뉴: ${order.menuName}, 수량: ${order.quantity}")
             totalOrders += order.quantity
         }
-        println("총 할인량 ${totalOrders * 2023}")
-        return totalOrders * 2023
+        return totalOrders * MENU_DISCOUNT
     }
 
     private fun calculateWeekdayDiscount(selectedMenus: List<Order>): Int {    //평일 평일에는 디저트 메뉴를 할인해준다
@@ -38,23 +36,25 @@ class MenuSaleCalculator(private val day: String) {
         var totalOrders = 0
 
         for (order in isDessertMenu(selectedMenus)) {
-            println("메뉴: ${order.menuName}, 수량: ${order.quantity}")
             totalOrders += order.quantity
         }
-        println("총 할인량 ${totalOrders * 2023}")
-        return totalOrders * 2023
+        return totalOrders * MENU_DISCOUNT
     }
 
     private fun isDessertMenu(selectedMenus: List<Order>): List<Order> {
         return selectedMenus.filter { order ->
-            order.menuName in Dessert.values().map { it.dessertName }
+            order.menuName in Dessert.entries.map { it.dessertName }
         }
     }
     //list= {Order(양송이스프,2),Order(티본,3)}
 
     private fun isMainMenu(selectedMenus: List<Order>): List<Order> {
         return selectedMenus.filter { order ->
-            order.menuName in MainMenu.values().map { it.mainMenuName }
+            order.menuName in MainMenu.entries.map { it.mainMenuName }
         }
+    }
+
+    companion object {
+        const val MENU_DISCOUNT = 2023
     }
 }
