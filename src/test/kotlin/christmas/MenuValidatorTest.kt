@@ -11,4 +11,10 @@ class MenuValidatorTest {
         val selectMenus = "꼼파뇨-1,제로콜라-1"
         assertThrows<IllegalArgumentException> { MenuValidator(selectMenus) }
     }
+
+    @Test
+    fun `메뉴판 형식(메뉴 - 수량)에 안맞게 입력 했을 때 예외처리`() {
+        val selectMenus = "-1,제로콜라-1"
+        assertThrows<IllegalArgumentException> { MenuValidator(selectMenus) }
+    }
 }
