@@ -16,20 +16,6 @@ class CalculatorTotalPrice(private val selectedMenus: List<Order>) {
         return sumMainMenuPrice() + sumAppetizerMenuPrice() + sumDesertMenuPrice() + sumBeverageMenuPrice()
     }
 
-    private fun isOrderOnlyBeverage(): Boolean {
-        //음료만 주문한 경우 함수명에 맞게 true반환
-        var menuCount = 0
-        for (order in selectedMenus) {
-            val menu = Beverage.values().find { it.drinkName == order.menuName }
-
-            if (menu != null) {
-                // 주문한 메뉴가 에피타이저Menu에 있는 경우
-                menuCount++
-            }
-        }
-        return (selectedMenus.size == menuCount)
-    }
-
     private fun sumAppetizerMenuPrice(): Int {
         var total = 0
         for (order in selectedMenus) {
