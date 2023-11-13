@@ -14,10 +14,10 @@ class MenuValidator(private val selectedMenu: String) {
         parsedMenu.forEach { order ->
             require(!checkMenu(order.menuName)) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
         }
-        require(!checkMinimumOrderAmount()) { print(ErrorMessage.ERROR_MENU_INPUT.getMessage()) }
-        require(checkOnlyBeverage()) { print(ErrorMessage.ERROR_MENU_INPUT.getMessage()) }
-        require(checkMaximumOrderAmount()) { print(ErrorMessage.ERROR_MENU_INPUT.getMessage()) }
-        require(!isDuplicateMenu()) { print(ErrorMessage.ERROR_MENU_INPUT.getMessage()) }
+        require(!checkMinimumOrderAmount()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
+        require(checkOnlyBeverage()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
+        require(checkMaximumOrderAmount()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
+        require(!isDuplicateMenu()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
     }
 
     private fun checkMenu(menuNameToCheck: String): Boolean {
