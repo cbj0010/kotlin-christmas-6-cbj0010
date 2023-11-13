@@ -23,9 +23,18 @@ class OrderParse() {
         return orderList
     }
 
-    private fun parseByHyphen(menuOrder: String): Order {
-        val (menuName, quantityStr) = menuOrder.split("-")
+    private fun isValidMenuFormat(menuOrder: String): Boolean {
+        val parts = menuOrder.split(",")
 
+        if (parts.size != 2) {
+            throw IllegalArgumentException(ErrorMessage.ERROR_MENU_INPUT.getMessage() + "올바른 주문 형식이 아님")
+        }
+        return true
+    }
+
+    private fun parseByHyphen(menuOrder: String): Order {
+        isValidMenuFormat(menuOrder)
+        val (menuName, quantityStr) = menuOrder.split("-")
         if (menuName.isBlank() || quantityStr.isBlank()) {
             throw IllegalArgumentException(ErrorMessage.ERROR_MENU_INPUT.getMessage())
         }
