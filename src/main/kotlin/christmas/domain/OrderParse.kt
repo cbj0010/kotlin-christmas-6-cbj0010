@@ -1,6 +1,7 @@
 package christmas.domain
 
 import christmas.data.Order
+import christmas.util.ErrorMessage
 
 class OrderParse() {
     /*
@@ -26,10 +27,10 @@ class OrderParse() {
         val (menuName, quantityStr) = menuOrder.split("-")
 
         if (menuName.isBlank() || quantityStr.isBlank()) {
-            throw IllegalArgumentException(ERROR_MENU_INPUT + "주문에 공백이 들어감")
+            throw IllegalArgumentException(ErrorMessage.ERROR_MENU_INPUT.getMessage())
         }
         val quantity = quantityStr.toIntOrNull()
-            ?: throw IllegalArgumentException(ERROR_MENU_INPUT + "주문 숫자가 int값이 아님")
+            ?: throw IllegalArgumentException(ErrorMessage.ERROR_MENU_INPUT.getMessage() + "주문 숫자가 int값이 아님")
 
         return Order(menuName.trim(), quantity)
     }
@@ -45,9 +46,5 @@ class OrderParse() {
             println("수량을 올바르게 입력해주세요:")
         }
         return orderList
-    }
-
-    companion object {
-        private const val ERROR_MENU_INPUT = "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요."
     }
 }
