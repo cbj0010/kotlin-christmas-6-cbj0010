@@ -17,6 +17,7 @@ class MenuValidator(private val selectedMenu: String) {
         require(!checkMinimumOrderAmount()) { print(ErrorMessage.ERROR_MENU_INPUT.getMessage()) }
         require(checkOnlyBeverage()) { print(ErrorMessage.ERROR_MENU_INPUT.getMessage()) }
         require(checkMaximumOrderAmount()) { print(ErrorMessage.ERROR_MENU_INPUT.getMessage()) }
+        require(!isDuplicateMenu()) { print(ErrorMessage.ERROR_MENU_INPUT.getMessage()) }
     }
 
     private fun checkMenu(menuNameToCheck: String): Boolean {
@@ -52,5 +53,8 @@ class MenuValidator(private val selectedMenu: String) {
         }
         return parsedMenu.size == total
     }
+
+    private fun isDuplicateMenu() = parsedMenu.distinct().size == parsedMenu.size
+
 
 }
