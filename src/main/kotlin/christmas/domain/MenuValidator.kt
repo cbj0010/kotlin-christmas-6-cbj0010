@@ -14,8 +14,9 @@ class MenuValidator(private val selectedMenu: String) {
         parsedMenu.forEach { order ->
             require(!checkMenu(order.menuName)) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
         }
-        require(!checkMinimumOrderAmount()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
-        require(checkOnlyBeverage()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
+        require(!checkMinimumOrderAmount()) { print(ErrorMessage.ERROR_MENU_INPUT.getMessage()) }
+        require(checkOnlyBeverage()) { print(ErrorMessage.ERROR_MENU_INPUT.getMessage()) }
+        require(checkMaximumOrderAmount()) { print(ErrorMessage.ERROR_MENU_INPUT.getMessage()) }
     }
 
     private fun checkMenu(menuNameToCheck: String): Boolean {
@@ -30,6 +31,13 @@ class MenuValidator(private val selectedMenu: String) {
     }
 
     private fun checkMinimumOrderAmount() = parsedMenu.size > 1
+    private fun checkMaximumOrderAmount(): Boolean {
+        var totalOrderNum = 0
+        parsedMenu.forEach { order ->
+            totalOrderNum += order.quantity
+        }
+        return (totalOrderNum < 21)
+    }
 
     private fun checkOnlyBeverage(): Boolean {
         var total = 0
