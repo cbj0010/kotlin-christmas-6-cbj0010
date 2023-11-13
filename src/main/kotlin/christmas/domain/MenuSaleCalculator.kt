@@ -1,7 +1,7 @@
 package christmas.domain
 
 import christmas.data.Order
-import christmas.util.Appetizer
+import christmas.util.Dessert
 import christmas.util.MainMenu
 
 class MenuSaleCalculator(private val day: String) {
@@ -10,7 +10,7 @@ class MenuSaleCalculator(private val day: String) {
     // 그래야 그거 기반으로 주말, 평일의 메뉴 할인을 어캐 적용할건지 달라지니까
 
 
-    //주말, 평일의 경우를 나눠서 할일율을 계산하는 함수
+    //주말, 평일의 경우를 나눠서 할인율을 계산하는 함수
     fun calculateDiscountRate(selectedMenus: List<Order>): Int {
         return when (day) {
             "주말" -> calculateWeekendDiscount(selectedMenus)
@@ -47,7 +47,7 @@ class MenuSaleCalculator(private val day: String) {
 
     private fun isDessertMenu(selectedMenus: List<Order>): List<Order> {
         return selectedMenus.filter { order ->
-            order.menuName in Appetizer.values().map { it.appetizerName }
+            order.menuName in Dessert.values().map { it.dessertName }
         }
     }
     //list= {Order(양송이스프,2),Order(티본,3)}
