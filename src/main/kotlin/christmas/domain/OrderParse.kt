@@ -10,8 +10,6 @@ class OrderParse() {
   이런 형식
 
   ,와 -를 기준으로 나눌 때 이뤄져야 하는 예외처리
-
-
    */
 
     fun parseOrder(input: String): List<Order> {
