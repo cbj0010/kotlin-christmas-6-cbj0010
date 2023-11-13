@@ -1,5 +1,6 @@
 package christmas.domain
 
+import christmas.data.Order
 import christmas.util.*
 
 class MenuValidator(private val selectedMenu: String) {
@@ -7,16 +8,14 @@ class MenuValidator(private val selectedMenu: String) {
     //1,1이런식으로 나눠진거는 메뉴 형식에 맞게 입력하지 않은거니까 예외를 던짐
 
     //수량이 0 개 일 때 ERROR_MENU_INPUT던짐
-    init {
-        isValidMenu()
-    }
+    private val parsedMenu: List<Order> = OrderParse().parseOrder(selectedMenu)
 
-
-    private fun isValidMenu() {
-        val parsedMenu = OrderParse().parseOrder(selectedMenu)
+    fun isValidMenu() {
         parsedMenu.forEach { order ->
             require(!checkMenu(order.menuName)) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
         }
+        require(!checkMinimumOrderAmount()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
+        require(checkOnlyBeverage()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
     }
 
     private fun checkMenu(menuNameToCheck: String): Boolean {
@@ -28,6 +27,22 @@ class MenuValidator(private val selectedMenu: String) {
 
         // 하나라도 일치하는 메뉴가 있다면 true, 그렇지 않으면 false 반환
         return isMainValid || isDessertValid || isAppetizerValid || isDrinkValid
-
     }
+
+    private fun checkMinimumOrderAmount() = parsedMenu.size > 1
+
+    private fun checkOnlyBeverage(): Boolean {
+        var total = 0
+
+        for (order in parsedMenu) {
+            val menu = Beverage.entries.find { it.drinkName == order.menuName }
+
+            if (menu != null) {
+                // 주문한 메뉴가 음료Menu에 있는 경우
+                total++
+            }
+        }
+        return parsedMenu.size == total
+    }
+
 }
