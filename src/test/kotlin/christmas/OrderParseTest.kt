@@ -27,8 +27,12 @@ class OrderParseTest {
     }
 
     @Test
-    fun `입력한 값이 메뉴이름,숫자 에 따른 자료형에 맞지 않을 때 예외를 던짐`() {
+    fun `입력한 값중 개수가 int가 아닌 경우 예외를 던짐`() {
+        val selectMenus = "1-제로콜라,제로콜라-1"
 
+        assertThrows<IllegalArgumentException> {
+            OrderParse().parseOrder(selectMenus)
+        }
     }
 }
 
