@@ -3,24 +3,53 @@ package christmas.domain
 import christmas.data.Order
 
 class OrderParse() {
+    /*
+  사용자가 입력한 값을 splite로 나눠서 저장하는 곳
+  티본스테이크 1개
+  바비큐립 1개
+  이런 형식
+
+  ,와 -를 기준으로 나눌 때 이뤄져야 하는 예외처리
+
+
+   */
+
     fun parseOrder(input: String): List<Order> {
         val orderList = mutableListOf<Order>()
-
         val menuOrders = input.split(",")
 
         for (menuOrder in menuOrders) {
-            val (menuName, quantityStr) = menuOrder.split("-")
-
-            try {
-                val quantity = quantityStr.toInt()
-                orderList.add(Order(menuName.trim(), quantity))
-            } catch (e: NumberFormatException) {
-                // 예외 처리: 수량이 숫자로 변환할 수 없는 경우
-                println("수량을 올바르게 입력해주세요: $menuOrder")
-            }
+            orderList.add(parseByHyphen(menuOrder))
         }
-
         return orderList
     }
 
+    private fun parseByHyphen(menuOrder: String): Order {
+        val (menuName, quantityStr) = menuOrder.split("-")
+
+        if (menuName.isBlank() || quantityStr.isBlank()) {
+            throw IllegalArgumentException(ERROR_MENU_INPUT + "주문에 공백이 들어감")
+        }
+        val quantity = quantityStr.toIntOrNull()
+            ?: throw IllegalArgumentException(ERROR_MENU_INPUT + "주문 숫자가 int값이 아님")
+
+        return Order(menuName.trim(), quantity)
+    }
+
+    private fun checkQuantity(menuName: String, quantityStr: String): MutableList<Order> {
+        //숫자 입력이 맞는지
+        val orderList = mutableListOf<Order>()
+        try {
+            val quantity = quantityStr.toInt()
+            orderList.add(Order(menuName.trim(), quantity))
+        } catch (e: NumberFormatException) {
+            // 예외 처리: 수량이 숫자로 변환할 수 없는 경우
+            println("수량을 올바르게 입력해주세요:")
+        }
+        return orderList
+    }
+
+    companion object {
+        private const val ERROR_MENU_INPUT = "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요."
+    }
 }
