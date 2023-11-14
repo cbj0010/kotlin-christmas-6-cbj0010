@@ -16,7 +16,7 @@ class OrderParse() {
     fun parseOrder(input: String): List<Order> {
         val orderList = mutableListOf<Order>()
         val menuOrders = input.split(",")
-
+        isValidMenuFormat(input)
         for (menuOrder in menuOrders) {
             orderList.add(parseByHyphen(menuOrder))
         }
@@ -25,15 +25,17 @@ class OrderParse() {
 
     private fun isValidMenuFormat(menuOrder: String): Boolean {
         val parts = menuOrder.split(",")
+        println("분리했을 때 기대 값 $parts")
+        val menuName = parts[0].trim()
+        val quantityStr = parts[1].trim()
 
-        if (parts.size != 2) {
-            throw IllegalArgumentException(ErrorMessage.ERROR_MENU_INPUT.getMessage() + "올바른 주문 형식이 아님")
-        }
+        require(menuName.isNotBlank() && quantityStr.isNotBlank()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
+
         return true
     }
 
     private fun parseByHyphen(menuOrder: String): Order {
-        isValidMenuFormat(menuOrder)
+
         val (menuName, quantityStr) = menuOrder.split("-")
         if (menuName.isBlank() || quantityStr.isBlank()) {
             throw IllegalArgumentException(ErrorMessage.ERROR_MENU_INPUT.getMessage())
@@ -42,18 +44,5 @@ class OrderParse() {
             ?: throw IllegalArgumentException(ErrorMessage.ERROR_MENU_INPUT.getMessage() + "주문 숫자가 int값이 아님")
 
         return Order(menuName.trim(), quantity)
-    }
-
-    private fun checkQuantity(menuName: String, quantityStr: String): MutableList<Order> {
-        //숫자 입력이 맞는지
-        val orderList = mutableListOf<Order>()
-        try {
-            val quantity = quantityStr.toInt()
-            orderList.add(Order(menuName.trim(), quantity))
-        } catch (e: NumberFormatException) {
-            // 예외 처리: 수량이 숫자로 변환할 수 없는 경우
-            println("수량을 올바르게 입력해주세요:")
-        }
-        return orderList
     }
 }

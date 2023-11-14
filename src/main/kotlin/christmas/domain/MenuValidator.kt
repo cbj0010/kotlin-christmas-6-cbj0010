@@ -10,14 +10,16 @@ class MenuValidator(private val selectedMenu: String) {
     //수량이 0 개 일 때 ERROR_MENU_INPUT던짐
     private val parsedMenu: List<Order> = OrderParse().parseOrder(selectedMenu)
 
-    fun isValidMenu() {
+    fun isValidMenu(): List<Order> {
+        println(parsedMenu)
         parsedMenu.forEach { order ->
-            require(!checkMenu(order.menuName)) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
+            require(checkMenu(order.menuName)) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
         }
-        require(!checkMinimumOrderAmount()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
-        require(checkOnlyBeverage()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
+        require(checkMinimumOrderAmount()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
+        require(!checkOnlyBeverage()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
         require(checkMaximumOrderAmount()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
-        require(!isDuplicateMenu()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
+        require(isDuplicateMenu()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
+        return parsedMenu
     }
 
     private fun checkMenu(menuNameToCheck: String): Boolean {
@@ -41,6 +43,7 @@ class MenuValidator(private val selectedMenu: String) {
     }
 
     private fun checkOnlyBeverage(): Boolean {
+        //음료수만 입력한 경우 true
         var total = 0
 
         for (order in parsedMenu) {
