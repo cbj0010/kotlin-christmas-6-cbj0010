@@ -15,6 +15,15 @@ class OutputView {
         println("-$discountInfo.sumDiscountMoney")
     }
 
+    fun displayNoBenefits() {
+        println("<혜택 내역>")
+        println("없음")
+        println()
+        println("<총혜택 금액>")
+        println("0원")
+        println()
+    }
+
     fun displayMenu() {
 
     }
