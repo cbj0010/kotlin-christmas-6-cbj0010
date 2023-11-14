@@ -1,18 +1,42 @@
 package christmas
 
+import christmas.data.BenefitInfo
 import christmas.data.ChristmasDiscountDayInfo
 import christmas.data.Order
 import christmas.domain.MenuSaleCalculator
 import christmas.domain.TotalPriceDiscountCalculator
+import christmas.view.OutputView
 
 class SaleController(private val inputDay: Int, private val menuList: List<Order>) {
 
     //입력한 요일을 판단하는 함수 , 검증 된 날짜와 검증된 Order(name,count)형식의 메뉴리스트를 받는다.
-    fun sumSaleMoney() {
-        val menuDiscountDay = checkDayForMenuDiscount()
-        val sumDiscountDay = checkDayForSpecialDiscount()
-        MenuSaleCalculator(menuDiscountDay).calculateDiscountRate(menuList)
-        TotalPriceDiscountCalculator(sumDiscountDay).calculateDiscountSpecialDay()
+    fun sumSaleMoney(): Int {
+        val menuDiscountDay = MenuSaleCalculator(checkDayForMenuDiscount()).calculateDiscountRate(menuList)
+        val christmasNearDiscount =
+            TotalPriceDiscountCalculator(checkDayForSpecialDiscount()).calculateNearChristmasDiscount()
+        val specialDiscountDay =
+            TotalPriceDiscountCalculator(checkDayForSpecialDiscount()).calculateDiscountSpecialDay()
+        val sumDiscount = menuDiscountDay + specialDiscountDay
+
+        return sumDiscount
+    }
+
+    fun saveDiscountInfo() {
+        val menuDiscountDay = MenuSaleCalculator(checkDayForMenuDiscount()).calculateDiscountRate(menuList)
+        val christmasNearDiscount =
+            TotalPriceDiscountCalculator(checkDayForSpecialDiscount()).calculateNearChristmasDiscount()
+        val specialDiscountDay =
+            TotalPriceDiscountCalculator(checkDayForSpecialDiscount()).calculateDiscountSpecialDay()
+        val sumDiscount = menuDiscountDay + specialDiscountDay
+
+        OutputView().displayBenefits(
+            BenefitInfo(
+                christmasNearDiscount,
+                menuDiscountDay,
+                specialDiscountDay,
+                sumDiscount
+            )
+        )
     }
 
     private fun checkDayForSpecialDiscount(): ChristmasDiscountDayInfo {
