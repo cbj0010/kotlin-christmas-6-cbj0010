@@ -11,12 +11,12 @@ class InputDayValidator(private val inputDay: String) {
     }
 
     private fun validateNatural() =
-        require(inputDay.toIntOrNull() == null) {
+        require(inputDay.toIntOrNull() != null) {
             ErrorMessage.ERROR_INPUT_DAY.getMessage()
         }
 
     private fun rangeDate() {
-        require(inputDay.toInt() !in 1..31) {
+        require(inputDay.toInt() in 1..31) {
             ErrorMessage.ERROR_INPUT_DAY.getMessage()
         }
     }
