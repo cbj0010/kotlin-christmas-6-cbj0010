@@ -4,7 +4,7 @@ import christmas.data.Order
 import christmas.util.*
 
 class MenuValidator(private val parsedMenu: List<Order>) {
-    //Order(1,1),Order(스테이크,1) 이런식으로 나눠준 애 중애서 메뉴가 메뉴판에 있는 메뉴인지 팔별
+    //기 이런식으로 나눠준 애 중애서 메뉴가 메뉴판에 있는 메뉴인지 팔별
     //1,1이런식으로 나눠진거는 메뉴 형식에 맞게 입력하지 않은거니까 예외를 던짐
 
     fun isValidMenu(): List<Order> {
@@ -14,7 +14,7 @@ class MenuValidator(private val parsedMenu: List<Order>) {
         require(checkMinimumOrderAmount()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
         require(!checkOnlyBeverage()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
         require(checkMaximumOrderAmount()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
-        require(isDuplicateMenu()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
+        require(!isDuplicateMenu()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
         return parsedMenu
     }
 
@@ -54,6 +54,5 @@ class MenuValidator(private val parsedMenu: List<Order>) {
     }
 
     private fun isDuplicateMenu() = parsedMenu.distinct().size == parsedMenu.size
-
 
 }

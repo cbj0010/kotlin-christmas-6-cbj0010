@@ -16,22 +16,18 @@ class OrderParse() {
     fun parseOrder(input: String): List<Order> {
         val orderList = mutableListOf<Order>()
         val menuOrders = input.split(",")
-        isValidMenuFormat(input)
+        isValidOrder(input)
         for (menuOrder in menuOrders) {
             orderList.add(parseByHyphen(menuOrder))
         }
         return orderList
     }
 
-    private fun isValidMenuFormat(menuOrder: String): Boolean {
-        val parts = menuOrder.split(",")
-        println("분리했을 때 기대 값 $parts")
-        val menuName = parts[0].trim()
-        val quantityStr = parts[1].trim()
+    private fun isValidOrder(input: String) {
+        val hyphenCount = input.count { it == '-' }
+        val commaCount = input.count { it == ',' }
 
-        require(menuName.isNotBlank() && quantityStr.isNotBlank()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
-
-        return true
+        require(hyphenCount == commaCount + 1) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
     }
 
     private fun parseByHyphen(menuOrder: String): Order {
