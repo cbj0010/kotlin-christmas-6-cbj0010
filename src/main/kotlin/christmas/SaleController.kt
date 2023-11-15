@@ -16,27 +16,34 @@ class SaleController(private val inputDay: Int, private val menuList: List<Order
             TotalPriceDiscountCalculator(checkDayForSpecialDiscount()).calculateNearChristmasDiscount()
         val specialDiscountDay =
             TotalPriceDiscountCalculator(checkDayForSpecialDiscount()).calculateDiscountSpecialDay()
-        val sumDiscount = menuDiscountDay + specialDiscountDay
-
-        return sumDiscount
+        return menuDiscountDay + christmasNearDiscount + specialDiscountDay
     }
 
-    fun saveDiscountInfo() {
+    fun saveDiscountInfo(totalPrice: Int) {
         val menuDiscountDay = MenuSaleCalculator(checkDayForMenuDiscount()).calculateDiscountRate(menuList)
         val christmasNearDiscount =
             TotalPriceDiscountCalculator(checkDayForSpecialDiscount()).calculateNearChristmasDiscount()
         val specialDiscountDay =
             TotalPriceDiscountCalculator(checkDayForSpecialDiscount()).calculateDiscountSpecialDay()
-        val sumDiscount = menuDiscountDay + specialDiscountDay
-
+        val giftEventDiscount = calculateGiftEventReward(totalPrice)
+        val sumDiscount = menuDiscountDay + christmasNearDiscount + specialDiscountDay + giftEventDiscount
         OutputView().displayBenefits(
             BenefitInfo(
                 christmasNearDiscount,
                 menuDiscountDay,
                 specialDiscountDay,
+                giftEventDiscount,
                 sumDiscount
             )
         )
+    }
+
+    private fun calculateGiftEventReward(giftEventMoneyInt: Int): Int {
+        println("giftEventMoneyInt: $giftEventMoneyInt")
+        return when {
+            (giftEventMoneyInt > 120000) -> 25000
+            else -> 0
+        }
     }
 
     private fun checkDayForSpecialDiscount(): ChristmasDiscountDayInfo {
