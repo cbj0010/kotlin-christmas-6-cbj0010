@@ -1,5 +1,8 @@
 package christmas.domain
 
+import christmas.util.StoreMessageConstants.MINIMUM_GIFT_PRICE
+import christmas.util.StoreMessageConstants.MIN_ORDER_AMOUNT_FOR_EVENT
+
 class ValidateEventConditions(private val totalPrice: Int) {
     //이벤트 혜택을 받을 수 있는지 판별
     /*
@@ -9,13 +12,13 @@ class ValidateEventConditions(private val totalPrice: Int) {
      */
     fun checkEventRequirements(): Boolean {
         return when {
-            totalPrice >= 10000 -> true//eventApplied()
+            totalPrice >= MIN_ORDER_AMOUNT_FOR_EVENT -> true//eventApplied()
             else -> false//eventNotApplied()
         }
     }
 
     fun checkValidGift(): Boolean {
-        return totalPrice >= 12000
+        return totalPrice >= MINIMUM_GIFT_PRICE
     }
 
 }

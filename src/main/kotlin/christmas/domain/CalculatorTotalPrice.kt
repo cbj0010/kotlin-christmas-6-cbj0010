@@ -5,6 +5,7 @@ import christmas.util.Appetizer
 import christmas.util.Beverage
 import christmas.util.Dessert
 import christmas.util.MainMenu
+import christmas.util.StoreMessageConstants.ZERO_NUM
 
 class CalculatorTotalPrice(private val selectedMenus: List<Order>) {
     //조건에 성립되는 메뉴List만 받아서 최종금액을 보여주면 되는거아님?
@@ -17,7 +18,7 @@ class CalculatorTotalPrice(private val selectedMenus: List<Order>) {
     }
 
     private fun sumAppetizerMenuPrice(): Int {
-        var total = 0
+        var total = ZERO_NUM
         for (order in selectedMenus) {
             val menu = Appetizer.entries.find { it.appetizerName == order.menuName }
 
@@ -30,7 +31,7 @@ class CalculatorTotalPrice(private val selectedMenus: List<Order>) {
     }
 
     private fun sumMainMenuPrice(): Int {
-        var total = 0
+        var total = ZERO_NUM
         for (order in selectedMenus) {
             val menu = MainMenu.entries.find { it.mainMenuName == order.menuName }
 
@@ -43,7 +44,7 @@ class CalculatorTotalPrice(private val selectedMenus: List<Order>) {
     }
 
     private fun sumDesertMenuPrice(): Int {
-        var total = 0
+        var total = ZERO_NUM
         for (order in selectedMenus) {
             val menu = Dessert.entries.find { it.dessertName == order.menuName }
 
@@ -56,7 +57,7 @@ class CalculatorTotalPrice(private val selectedMenus: List<Order>) {
     }
 
     private fun sumBeverageMenuPrice(): Int {
-        var total = 0
+        var total = ZERO_NUM
         for (order in selectedMenus) {
             val menu = Beverage.entries.find { it.drinkName == order.menuName }
 

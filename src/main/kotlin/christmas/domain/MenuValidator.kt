@@ -2,6 +2,8 @@ package christmas.domain
 
 import christmas.data.Order
 import christmas.util.*
+import christmas.util.StoreMessageConstants.FIRST_NUM
+import christmas.util.StoreMessageConstants.ZERO_NUM
 
 class MenuValidator(private val parsedMenu: List<Order>) {
     //기 이런식으로 나눠준 애 중애서 메뉴가 메뉴판에 있는 메뉴인지 팔별
@@ -29,18 +31,18 @@ class MenuValidator(private val parsedMenu: List<Order>) {
         return isMainValid || isDessertValid || isAppetizerValid || isDrinkValid
     }
 
-    private fun checkMinimumOrderAmount() = parsedMenu.size > 1
+    private fun checkMinimumOrderAmount() = parsedMenu.size > FIRST_NUM
     private fun checkMaximumOrderAmount(): Boolean {
-        var totalOrderNum = 0
+        var totalOrderNum = ZERO_NUM
         parsedMenu.forEach { order ->
             totalOrderNum += order.quantity
         }
-        return (totalOrderNum < 21)
+        return (totalOrderNum < MAXIMUM_ORDER)
     }
 
     private fun checkOnlyBeverage(): Boolean {
         //음료수만 입력한 경우 true
-        var total = 0
+        var total = ZERO_NUM
 
         for (order in parsedMenu) {
             val menu = Beverage.entries.find { it.drinkName == order.menuName }
@@ -55,4 +57,7 @@ class MenuValidator(private val parsedMenu: List<Order>) {
 
     private fun isDuplicateMenu() = parsedMenu.distinct().size == parsedMenu.size
 
+    companion object {
+        private const val MAXIMUM_ORDER = 21
+    }
 }

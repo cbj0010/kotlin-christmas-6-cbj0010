@@ -15,7 +15,7 @@ class OrderParse() {
 
     fun parseOrder(input: String): List<Order> {
         val orderList = mutableListOf<Order>()
-        val menuOrders = input.split(",")
+        val menuOrders = input.split(COMMA)
         isValidOrder(input)
         for (menuOrder in menuOrders) {
             orderList.add(parseByHyphen(menuOrder))
@@ -24,21 +24,26 @@ class OrderParse() {
     }
 
     private fun isValidOrder(input: String) {
-        val hyphenCount = input.count { it == '-' }
-        val commaCount = input.count { it == ',' }
+        val hyphenCount = input.count { it == HYPHEN }
+        val commaCount = input.count { it == COMMA }
 
         require(hyphenCount == commaCount + 1) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
     }
 
     private fun parseByHyphen(menuOrder: String): Order {
 
-        val (menuName, quantityStr) = menuOrder.split("-")
+        val (menuName, quantityStr) = menuOrder.split(HYPHEN)
         if (menuName.isBlank() || quantityStr.isBlank()) {
             throw IllegalArgumentException(ErrorMessage.ERROR_MENU_INPUT.getMessage())
         }
         val quantity = quantityStr.toIntOrNull()
-            ?: throw IllegalArgumentException(ErrorMessage.ERROR_MENU_INPUT.getMessage() + "주문 숫자가 int값이 아님")
+            ?: throw IllegalArgumentException(ErrorMessage.ERROR_MENU_INPUT.getMessage())
 
         return Order(menuName.trim(), quantity)
+    }
+
+    companion object {
+        private const val COMMA = ','
+        private const val HYPHEN = '-'
     }
 }

@@ -3,6 +3,8 @@ package christmas.domain
 import christmas.data.Order
 import christmas.util.Dessert
 import christmas.util.MainMenu
+import christmas.util.StoreMessageConstants.WEEKEND_DAY
+import christmas.util.StoreMessageConstants.ZERO_NUM
 
 class MenuSaleCalculator(private val day: String) {
 
@@ -13,14 +15,14 @@ class MenuSaleCalculator(private val day: String) {
     //주말, 평일의 경우를 나눠서 할인율을 계산하는 함수
     fun calculateDiscountRate(selectedMenus: List<Order>): Int {
         return when (day) {
-            "주말" -> calculateWeekendDiscount(selectedMenus)
+            WEEKEND_DAY -> calculateWeekendDiscount(selectedMenus)
             else -> calculateWeekdayDiscount(selectedMenus)
         }
     }
 
     //중복되는 코드 확장함수로 줄일 수 있지 않을까?
     private fun calculateWeekendDiscount(selectedMenus: List<Order>): Int {    //주말 - 메인 메뉴를 메뉴1개당 할인
-        var totalOrders = 0
+        var totalOrders = ZERO_NUM
 
         for (order in isMainMenu(selectedMenus)) {
             totalOrders += order.quantity
@@ -33,7 +35,7 @@ class MenuSaleCalculator(private val day: String) {
         //메뉴 리스트들 중에서 디저트 메뉴 판별
         //받은 디저트 메뉴의 총 개수 확인
         //반환 - 총 할인금액
-        var totalOrders = 0
+        var totalOrders = ZERO_NUM
 
         for (order in isDessertMenu(selectedMenus)) {
             totalOrders += order.quantity

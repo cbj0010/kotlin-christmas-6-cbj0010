@@ -3,6 +3,14 @@ package christmas.domain
 import christmas.data.BenefitInfo
 import christmas.data.ChristmasDiscountDayInfo
 import christmas.data.Order
+import christmas.util.StoreMessageConstants.ACTUAL_CHRISTMAS_DAY
+import christmas.util.StoreMessageConstants.CHRISTMAS_DAY
+import christmas.util.StoreMessageConstants.MINIMUM_GIFT_PRICE
+import christmas.util.StoreMessageConstants.NONE
+import christmas.util.StoreMessageConstants.STAR_DAY
+import christmas.util.StoreMessageConstants.WEEKDAY
+import christmas.util.StoreMessageConstants.WEEKEND_DAY
+import christmas.util.StoreMessageConstants.ZERO_NUM
 import christmas.view.OutputView
 
 class SaleController(private val inputDay: Int, private val menuList: List<Order>) {
@@ -39,30 +47,30 @@ class SaleController(private val inputDay: Int, private val menuList: List<Order
 
     fun calculateGiftEventReward(totalPrice: Int): Int {
         return when {
-            (totalPrice > 120000) -> 25000
-            else -> 0
+            (totalPrice > MINIMUM_GIFT_PRICE) -> GIFT_PRICE
+            else -> ZERO_NUM
         }
     }
 
     private fun checkDayForSpecialDiscount(): ChristmasDiscountDayInfo {
         return when {
-            inputDay % 7 == 3 -> ChristmasDiscountDayInfo(STAR_DAY, inputDay)
-            inputDay == 25 -> ChristmasDiscountDayInfo(CHRISTMAS_DAY, 25)
+            inputDay % SEVEN_DAY == 3 -> ChristmasDiscountDayInfo(STAR_DAY, inputDay)
+            inputDay == ACTUAL_CHRISTMAS_DAY -> ChristmasDiscountDayInfo(CHRISTMAS_DAY, ACTUAL_CHRISTMAS_DAY)
             else -> ChristmasDiscountDayInfo(NONE, inputDay)
         }
     }
 
     private fun checkDayForMenuDiscount(): String {
-        return when (inputDay % 7) {
-            1, 2 -> "주말"
-            else -> "평일"
+        return when (inputDay % SEVEN_DAY) {
+            1, 2 -> WEEKEND_DAY
+            else -> WEEKDAY
         }
     }
 
 
     companion object {
-        const val STAR_DAY = "STAR_DAY"
-        const val CHRISTMAS_DAY = "CHRISTMAS_DAY"
-        const val NONE = "NONE"
+        private const val SEVEN_DAY = 7
+        private const val GIFT_PRICE = 25000
+
     }
 }
