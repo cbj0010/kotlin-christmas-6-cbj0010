@@ -44,10 +44,11 @@ class OrderParseTest {
 
     @Test
     fun `제대로 된 메뉴를 입력한 경우`() {
-        val selectMenus = "티본스테이크-19,제로콜라-1"
+        val selectMenus = "해산물파스타-2,레드와인-1,초코케이크-1"
         val parseMenu: List<Order> = listOf(
-            Order(menuName = "티본스테이크", quantity = 19),
-            Order(menuName = "제로콜라", quantity = 1)
+            Order(menuName = "해산물파스타", quantity = 2),
+            Order(menuName = "레드와인", quantity = 1),
+            Order(menuName = "초코케이크", quantity = 1)
         )
         Assertions.assertThat(OrderParse().parseOrder(selectMenus)).isEqualTo(parseMenu)
     }

@@ -2,10 +2,20 @@ package christmas
 
 import christmas.data.Order
 import christmas.domain.MenuValidator
+import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
 class MenuValidatorTest {
+
+    @Test
+    fun `메뉴를 제대로 입력했을 때`() {
+        val selectMenus = listOf(
+            Order(menuName = "타파스", quantity = 1),
+            Order(menuName = "제로콜라", quantity = 1)
+        )
+        assertThat(MenuValidator(selectMenus).isValidMenu()).isEqualTo(selectMenus)
+    }
 
     @Test
     fun `메뉴판에 없는 메뉴를 입력 했을 때 예외처리`() {
