@@ -12,7 +12,7 @@ class OutputView {
 
     fun displayMenu(menu: List<Order>) {
         println()
-        println("<주문메뉴>")
+        println("<주문 메뉴>")
         for (selectMenus in menu) {
             println("${selectMenus.menuName} ${selectMenus.quantity}게")
         }
@@ -21,31 +21,31 @@ class OutputView {
 
     fun displayTotalPriceOrder(price: Int) {
         println("<할인 전 총주문 금액>")
-        println(price)
+        println(price.toDecimalFormatWithCurrency())
         println()
     }
 
     fun displayGiftEvent() {
-        println("<증정메뉴>")
+        println("<증정 메뉴>")
         println("샴페인 1개")
         println()
     }
 
     fun displayGiftNoneEvent() {
-        println("<증정메뉴>")
+        println("<증정 메뉴>")
         println("없음")
         println()
     }
 
     fun displayBenefits(discountInfo: BenefitInfo) {
         println("<혜택 내역>")
-        println("크리스마스 디데이 할인: -${discountInfo.christmasNearDiscount}")
-        println("평일 할인: -${discountInfo.menuDiscountDay}")
-        println("특별 할인: -${discountInfo.specialDiscountDay}")
-        println("증정 이벤트: - ${discountInfo.giftEventMoney}")
+        println("크리스마스 디데이 할인: -${discountInfo.christmasNearDiscount.toDecimalFormatWithCurrency()}")
+        println("평일 할인: -${discountInfo.menuDiscountDay.toDecimalFormatWithCurrency()}")
+        println("특별 할인: -${discountInfo.specialDiscountDay.toDecimalFormatWithCurrency()}")
+        println("증정 이벤트: -${discountInfo.giftEventMoney.toDecimalFormatWithCurrency()}")
         println()
         println("<총혜택 금액>")
-        println("-${discountInfo.sumDiscountMoney}")
+        println("-${discountInfo.sumDiscountMoney.toDecimalFormatWithCurrency()}")
         println()
     }
 
@@ -59,8 +59,8 @@ class OutputView {
     }
 
     fun displayFinalMoney(finalPrice: Int) {
-        println("<할인 후 예상 결제 금약>")
-        println(finalPrice)
+        println("<할인 후 예상 결제 금액>")
+        println(finalPrice.toDecimalFormatWithCurrency())
         println()
     }
 
@@ -72,5 +72,9 @@ class OutputView {
             totalDiscountMoney >= 5000 -> println("별")
             else -> println("없음")
         }
+    }
+
+    fun Int.toDecimalFormatWithCurrency(): String {
+        return String.format("%,d원", this)
     }
 }
