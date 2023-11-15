@@ -18,21 +18,22 @@ class OutputView {
         println()
     }
 
-    fun displayTotalPriceOrder(price:Int){
+    fun displayTotalPriceOrder(price: Int) {
         println("<할인 전 총주문 금액>")
         println(price)
+        println()
     }
 
     fun displayGiftEvent() {
         println("<증정메뉴>")
         println("샴페인 1개")
-        println("")
+        println()
     }
 
     fun displayGiftNoneEvent() {
         println("<증정메뉴>")
         println("없음")
-        println("")
+        println()
     }
 
     fun displayBenefits(discountInfo: BenefitInfo) {
@@ -44,6 +45,7 @@ class OutputView {
         println()
         println("<총혜택 금액>")
         println("-${discountInfo.sumDiscountMoney}")
+        println()
     }
 
     fun displayNoBenefits() {
@@ -55,12 +57,19 @@ class OutputView {
         println()
     }
 
+    fun displayFinalMoney(finalPrice: Int) {
+        println("<할인 후 예상 결제 금약>")
+        println(finalPrice)
+        println()
+    }
+
     fun displayChristMasBadge(totalDiscountMoney: Int) {
         println("<12월 이벤트 배지>")
         when {
             totalDiscountMoney >= 20000 -> println("산타")
             totalDiscountMoney >= 10000 -> println("트리")
             totalDiscountMoney >= 5000 -> println("별")
+            else -> println("없음")
         }
     }
 }
