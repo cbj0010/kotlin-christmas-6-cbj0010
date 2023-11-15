@@ -1,21 +1,21 @@
-package christmas
+package christmas.domain
 
 import christmas.data.BenefitInfo
 import christmas.data.ChristmasDiscountDayInfo
 import christmas.data.Order
-import christmas.domain.MenuSaleCalculator
-import christmas.domain.TotalPriceDiscountCalculator
 import christmas.view.OutputView
 
 class SaleController(private val inputDay: Int, private val menuList: List<Order>) {
 
     //입력한 요일을 판단하는 함수 , 검증 된 날짜와 검증된 Order(name,count)형식의 메뉴리스트를 받는다.
     fun sumSaleMoney(): Int {
+        val totalPriceDiscountCalculator = TotalPriceDiscountCalculator(checkDayForSpecialDiscount())
         val menuDiscountDay = MenuSaleCalculator(checkDayForMenuDiscount()).calculateDiscountRate(menuList)
         val christmasNearDiscount =
-            TotalPriceDiscountCalculator(checkDayForSpecialDiscount()).calculateNearChristmasDiscount()
+            totalPriceDiscountCalculator.calculateNearChristmasDiscount()
         val specialDiscountDay =
-            TotalPriceDiscountCalculator(checkDayForSpecialDiscount()).calculateDiscountSpecialDay()
+            totalPriceDiscountCalculator.calculateDiscountSpecialDay()
+        println("$menuDiscountDay + $christmasNearDiscount + $specialDiscountDay")
         return menuDiscountDay + christmasNearDiscount + specialDiscountDay
     }
 
@@ -38,10 +38,9 @@ class SaleController(private val inputDay: Int, private val menuList: List<Order
         )
     }
 
-    private fun calculateGiftEventReward(giftEventMoneyInt: Int): Int {
-        println("giftEventMoneyInt: $giftEventMoneyInt")
+    fun calculateGiftEventReward(totalPrice: Int): Int {
         return when {
-            (giftEventMoneyInt > 120000) -> 25000
+            (totalPrice > 120000) -> 25000
             else -> 0
         }
     }
@@ -50,7 +49,7 @@ class SaleController(private val inputDay: Int, private val menuList: List<Order
         return when {
             inputDay % 7 == 3 -> ChristmasDiscountDayInfo(STAR_DAY, inputDay)
             inputDay == 25 -> ChristmasDiscountDayInfo(CHRISTMAS_DAY, 25)
-            else -> ChristmasDiscountDayInfo(NONE, 0)
+            else -> ChristmasDiscountDayInfo(NONE, inputDay)
         }
     }
 
