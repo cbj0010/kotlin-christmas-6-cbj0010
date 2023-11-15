@@ -16,7 +16,6 @@ class FoodStore() {
     }
 
     private fun checkUserValidate(): Int {
-//수량이 0 개 일 때 ERROR_MENU_INPUT던짐
         return try {
             InputDayValidator(InputView().inputUser()).isValidDate()
         } catch (e: IllegalArgumentException) {
@@ -66,7 +65,6 @@ class FoodStore() {
     }
 
     private fun showDiscount(totalPrice: Int, totalDiscountPrice: SaleController) {
-        //이게 true이면 sale이 들어감 false면 세일이 들어가지 않음을 보여줌
         val checkEvent = ValidateEventConditions(totalPrice)
 
         if (checkEvent.checkEventRequirements()) {
