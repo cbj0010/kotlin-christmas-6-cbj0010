@@ -16,9 +16,9 @@ class FoodStore() {
     private fun checkUserValidate() {
 //수량이 0 개 일 때 ERROR_MENU_INPUT던짐
         try {
-            val date = InputDayValidator(InputView().inputDay()).isValidDate()
+            val date = InputDayValidator(InputView().inputUser()).isValidDate()
             println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)")
-            val parsedMenu: List<Order> = OrderParse().parseOrder(InputView().inputDay())
+            val parsedMenu: List<Order> = OrderParse().parseOrder(InputView().inputUser())
             val menu = MenuValidator(parsedMenu).isValidMenu()
             showAll(date, menu)
         } catch (e: IllegalArgumentException) {
