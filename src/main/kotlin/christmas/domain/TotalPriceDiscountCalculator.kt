@@ -1,8 +1,8 @@
 package christmas.domain
 
-import christmas.SaleController.Companion.CHRISTMAS_DAY
-import christmas.SaleController.Companion.STAR_DAY
 import christmas.data.ChristmasDiscountDayInfo
+import christmas.domain.SaleController.Companion.CHRISTMAS_DAY
+import christmas.domain.SaleController.Companion.STAR_DAY
 
 class TotalPriceDiscountCalculator(private val day: ChristmasDiscountDayInfo) {
     //총액 할인에 적용되는 금액
@@ -19,7 +19,10 @@ class TotalPriceDiscountCalculator(private val day: ChristmasDiscountDayInfo) {
 
     fun calculateNearChristmasDiscount(): Int {
         //1,000원으로 시작하여 크리스마스가 다가올수록 날마다 할인 금액이 100원씩 증가
-        return 1000 + (day.actualDay - 1) * 100
+        return when {
+            day.actualDay <= 25 -> 1000 + (day.actualDay - 1) * 100
+            else -> 0
+        }
     }
 
     private fun calculateChristMasDiscount(): Int {
