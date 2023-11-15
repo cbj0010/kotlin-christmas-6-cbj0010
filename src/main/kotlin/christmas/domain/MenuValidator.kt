@@ -3,15 +3,11 @@ package christmas.domain
 import christmas.data.Order
 import christmas.util.*
 
-class MenuValidator(private val selectedMenu: String) {
+class MenuValidator(private val parsedMenu: List<Order>) {
     //Order(1,1),Order(스테이크,1) 이런식으로 나눠준 애 중애서 메뉴가 메뉴판에 있는 메뉴인지 팔별
     //1,1이런식으로 나눠진거는 메뉴 형식에 맞게 입력하지 않은거니까 예외를 던짐
 
-    //수량이 0 개 일 때 ERROR_MENU_INPUT던짐
-    private val parsedMenu: List<Order> = OrderParse().parseOrder(selectedMenu)
-
     fun isValidMenu(): List<Order> {
-        println(parsedMenu)
         parsedMenu.forEach { order ->
             require(checkMenu(order.menuName)) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
         }

@@ -11,6 +11,7 @@ class OutputView {
     }
 
     fun displayMenu(menu: List<Order>) {
+        println()
         println("<주문메뉴>")
         for (selectMenus in menu) {
             println("${selectMenus.menuName} ${selectMenus.quantity}게")

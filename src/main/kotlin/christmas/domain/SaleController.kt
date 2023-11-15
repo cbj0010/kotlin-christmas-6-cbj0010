@@ -15,7 +15,6 @@ class SaleController(private val inputDay: Int, private val menuList: List<Order
             totalPriceDiscountCalculator.calculateNearChristmasDiscount()
         val specialDiscountDay =
             totalPriceDiscountCalculator.calculateDiscountSpecialDay()
-        println("$menuDiscountDay + $christmasNearDiscount + $specialDiscountDay")
         return menuDiscountDay + christmasNearDiscount + specialDiscountDay
     }
 
