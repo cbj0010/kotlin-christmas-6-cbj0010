@@ -1,29 +1,21 @@
 package christmas
 
-import christmas.data.Order
-import christmas.util.Beverage
-
-class ValidateEventConditions(private val selectedMenus: List<Order>) {
-    //order 클래스로 변환한 애를 가지고 10000원 이상 할인을 받을 수 있는 조건을 검증
-    //검증한 값이 다 true인 경우에 전체 총 합을 구하기 위해서 검증이 완료 된건지 아닌지 전달
-
+class ValidateEventConditions(private val totalPrice: Int) {
+    //이벤트 혜택을 받을 수 있는지 판별
+    /*
+    고객에게 적용된 이벤트 내역만 보여 주세요.
+적용된 이벤트가 하나도 없다면 혜택 내역 "없음"으로 보여 주세요.
+증정 이벤트: 할인 전 총주문 금액이 12만 원 이상일 때, 샴페인 1개 증정
+     */
     fun checkEventRequirements(): Boolean {
-        return true
-    }
-
-    private fun isOrderOnlyBeverage(): Boolean {
-        //음료만 주문한 경우 함수명에 맞게 true반환
-        var menuCount = 0
-        for (order in selectedMenus) {
-            val menu = Beverage.entries.find { it.drinkName == order.menuName }
-
-            if (menu != null) {
-                // 주문한 메뉴가 에피타이저Menu에 있는 경우
-                menuCount++
-            }
+        return when {
+            totalPrice >= 10000 -> true//eventApplied()
+            else -> false//eventNotApplied()
         }
-        return (selectedMenus.size == menuCount)
     }
-    //이게 false여야지만 1000원이상 주문시 할인 혜택을 적용할 수 있음
+
+    fun checkValidGift(): Boolean {
+        return totalPrice >= 12000
+    }
 
 }

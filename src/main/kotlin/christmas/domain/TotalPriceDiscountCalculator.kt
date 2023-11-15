@@ -29,4 +29,5 @@ class TotalPriceDiscountCalculator(private val day: ChristmasDiscountDayInfo) {
     }
 
     private fun calculateStarDayDiscount(): Int = 1000  //일요일의 경우 할인
+
 }
