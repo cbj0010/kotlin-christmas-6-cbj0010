@@ -10,20 +10,30 @@ class FoodStore() {
     private val outputView = OutputView()
     fun start() {
         outputView.startMessage()
-        checkUserValidate()
+        val date = checkUserValidate()
+        val menu = checkUserMenuValidate()
+        showOrderInfo(date, menu)
     }
 
-    private fun checkUserValidate() {
+    private fun checkUserValidate(): Int {
 //수량이 0 개 일 때 ERROR_MENU_INPUT던짐
-        try {
-            val date = InputDayValidator(InputView().inputUser()).isValidDate()
-            outputView.showOrderPrompt()
-            val parsedMenu: List<Order> = OrderParse().parseOrder(InputView().inputUser())
-            val menu = MenuValidator(parsedMenu).isValidMenu()
-            showOrderInfo(date, menu)
+        return try {
+            InputDayValidator(InputView().inputUser()).isValidDate()
         } catch (e: IllegalArgumentException) {
             println(e.message)
             checkUserValidate()
+        }
+    }
+
+    private fun checkUserMenuValidate(): List<Order> {
+        return try {
+            outputView.showOrderPrompt()
+            val parsedMenu: List<Order> = OrderParse().parseOrder(InputView().inputUser())
+            val menu = MenuValidator(parsedMenu).isValidMenu()
+            return menu
+        } catch (e: IllegalArgumentException) {
+            println(e.message)
+            checkUserMenuValidate()
         }
     }
 

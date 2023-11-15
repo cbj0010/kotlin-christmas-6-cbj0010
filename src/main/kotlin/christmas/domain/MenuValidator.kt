@@ -14,7 +14,7 @@ class MenuValidator(private val parsedMenu: List<Order>) {
         require(checkMinimumOrderAmount()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
         require(!checkOnlyBeverage()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
         require(checkMaximumOrderAmount()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
-        require(!isDuplicateMenu()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
+        require(isDuplicateMenu()) { ErrorMessage.ERROR_MENU_INPUT.getMessage() }
         return parsedMenu
     }
 
@@ -49,7 +49,7 @@ class MenuValidator(private val parsedMenu: List<Order>) {
         return parsedMenu.size == total
     }
 
-    private fun isDuplicateMenu() = parsedMenu.distinct().size == parsedMenu.size
+    private fun isDuplicateMenu() = parsedMenu.distinctBy { it.menuName }.size == parsedMenu.size
 
     companion object {
         private const val MAXIMUM_ORDER = 21
