@@ -14,13 +14,13 @@ class OrderParse() {
    */
 
     fun parseOrder(input: String): List<Order> {
-        val orderList = mutableListOf<Order>()
+        val orderMenus = mutableListOf<Order>()
         val menuOrders = input.split(COMMA)
         isValidOrder(input)
         for (menuOrder in menuOrders) {
-            orderList.add(parseByHyphen(menuOrder))
+            orderMenus.add(parseByHyphen(menuOrder))
         }
-        return orderList
+        return orderMenus
     }
 
     private fun isValidOrder(input: String) {

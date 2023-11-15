@@ -13,12 +13,12 @@ import christmas.util.StoreMessageConstants.WEEKEND_DAY
 import christmas.util.StoreMessageConstants.ZERO_NUM
 import christmas.view.OutputView
 
-class SaleController(private val inputDay: Int, private val menuList: List<Order>) {
+class SaleController(private val inputDay: Int, private val selectMenus: List<Order>) {
 
     //입력한 요일을 판단하는 함수 , 검증 된 날짜와 검증된 Order(name,count)형식의 메뉴리스트를 받는다.
     fun sumSaleMoney(): Int {
         val totalPriceDiscountCalculator = TotalPriceDiscountCalculator(checkDayForSpecialDiscount())
-        val menuDiscountDay = MenuSaleCalculator(checkDayForMenuDiscount()).calculateDiscountRate(menuList)
+        val menuDiscountDay = MenuSaleCalculator(checkDayForMenuDiscount()).calculateDiscountRate(selectMenus)
         val christmasNearDiscount =
             totalPriceDiscountCalculator.calculateNearChristmasDiscount()
         val specialDiscountDay =
@@ -27,7 +27,7 @@ class SaleController(private val inputDay: Int, private val menuList: List<Order
     }
 
     fun saveDiscountInfo(totalPrice: Int) {
-        val menuDiscountDay = MenuSaleCalculator(checkDayForMenuDiscount()).calculateDiscountRate(menuList)
+        val menuDiscountDay = MenuSaleCalculator(checkDayForMenuDiscount()).calculateDiscountRate(selectMenus)
         val christmasNearDiscount =
             TotalPriceDiscountCalculator(checkDayForSpecialDiscount()).calculateNearChristmasDiscount()
         val specialDiscountDay =
