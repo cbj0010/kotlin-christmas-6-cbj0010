@@ -1,4 +1,4 @@
-package christmas
+package christmas.domain
 
 class ValidateEventConditions(private val totalPrice: Int) {
     //이벤트 혜택을 받을 수 있는지 판별
