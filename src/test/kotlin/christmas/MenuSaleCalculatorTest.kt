@@ -6,7 +6,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 
 class MenuSaleCalculatorTest {
-    private val discountMenuMoeny = 2023
 
     @Test
 
