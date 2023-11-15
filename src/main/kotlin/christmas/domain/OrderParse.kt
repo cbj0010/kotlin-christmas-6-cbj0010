@@ -4,14 +4,6 @@ import christmas.data.Order
 import christmas.util.ErrorMessage
 
 class OrderParse() {
-    /*
-  사용자가 입력한 값을 splite로 나눠서 저장하는 곳
-  티본스테이크 1개
-  바비큐립 1개
-  이런 형식
-
-  ,와 -를 기준으로 나눌 때 이뤄져야 하는 예외처리
-   */
 
     fun parseOrder(input: String): List<Order> {
         val orderMenus = mutableListOf<Order>()

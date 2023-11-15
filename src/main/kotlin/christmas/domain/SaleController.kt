@@ -15,7 +15,6 @@ import christmas.view.OutputView
 
 class SaleController(private val inputDay: Int, private val selectMenus: List<Order>) {
 
-    //입력한 요일을 판단하는 함수 , 검증 된 날짜와 검증된 Order(name,count)형식의 메뉴리스트를 받는다.
     fun sumSaleMoney(): Int {
         val totalPriceDiscountCalculator = TotalPriceDiscountCalculator(checkDayForSpecialDiscount())
         val menuDiscountDay = MenuSaleCalculator(checkDayForMenuDiscount()).calculateDiscountRate(selectMenus)
